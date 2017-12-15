@@ -51,9 +51,10 @@ const compareUserPW = (req, res, next) => {
   // If the passwords match set the username on `req` ==> req.username = user.username; and call next();
   if (!username) {
     res.status(422).json('Error: Must provide a username');
+    return;
   };
   User.findOne({ username }, (err, user) => {
-    if (user || err === null) {
+    if (!user) {
       res.status(422).json('username does not exist');
     };
     const hashedPw = user.password;

@@ -7,7 +7,6 @@ const createUser = (req, res) => {
   const { username }  = req.body;
   const password = req.password;
   const newUser = new User({ username, password });
-  console.log('Hello');
   newUser.save((err, savedUser) => {
     if (err) {
       res.status(422).json({ 'Need both username and password': err.message })

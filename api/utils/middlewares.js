@@ -15,6 +15,11 @@ const authenticate = (req, res, next) => {
     });
   } else {
     return res.status(403).json({
+      /*Now when performing Get requests, you sometimes need to send a 
+      web token into a tab called authorization. In the postman, there 
+      is a headers tab, click on it, then go to key, name it Authorization, 
+      then add the web token onto the value. Make sure its in raw format 
+      without any qoutes.*/
       error: 'No token provided, must be set on the Authorization Header'
     });
   }
@@ -35,6 +40,7 @@ const encryptUserPW = (req, res, next) => {
     .hash(password, SaltRounds)
     .then(pw => {
       req.password = pw;
+      req.username = username;
       next();
     })
     .catch(err => {
